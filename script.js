@@ -37,9 +37,20 @@ function createGUI() {
     button.innerText = "Play Fullscreen";
     button.onclick = () => {
       const win = window.open("about:blank", "_blank");
+      if (!win) {
+        alert("Popup blocked! Please allow popups for this site.");
+        return;
+      }
       win.document.write(`
-        <iframe src="${game.path}" style="width:100vw; height:100vh; border:none;"></iframe>
+        <!DOCTYPE html>
+        <html>
+        <head><title>${game.name}</title></head>
+        <body style="margin:0;overflow:hidden;">
+          <iframe src="${game.path}" style="width:100vw; height:100vh; border:none;"></iframe>
+        </body>
+        </html>
       `);
+      win.document.close();
     };
 
     card.appendChild(title);
