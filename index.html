@@ -2,11 +2,205 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Game Launcher</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Oskar Projects Game Launcher</title>
   <link rel="icon" href="https://i.imgur.com/GSJbXh5.png" />
+  <style>
+    /* Basic Reset and Background */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #001f3f, #004b8d);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      text-align: center;
+      user-select: none;
+      overflow-x: hidden;
+    }
+
+    /* Logo Styles */
+    #logo {
+      width: 220px;
+      margin: 40px auto 20px;
+      filter: drop-shadow(0 0 8px #00bfff);
+      transition: transform 0.3s ease-in-out;
+      cursor: pointer;
+      display: block;
+    }
+    #logo:hover {
+      transform: scale(1.05) rotate(5deg);
+    }
+
+    /* Warning text for Safari */
+    #warning {
+      color: #ffcc00;
+      font-size: 14px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      text-shadow: 0 0 5px #ffcc00;
+    }
+
+    /* Game list container */
+    #game-list {
+      display: flex;
+      justify-content: center;
+      padding: 0 20px 40px;
+    }
+
+    /* Game card */
+    .game-card {
+      background: rgba(0, 75, 141, 0.8);
+      padding: 25px;
+      border-radius: 25px;
+      width: 260px;
+      box-shadow: 0 0 15px #00bfffaa;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      margin: 0 15px;
+    }
+
+    .game-card:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 30px #00d4ff;
+    }
+
+    /* Game title */
+    .game-title {
+      font-size: 22px;
+      margin-bottom: 15px;
+      font-weight: 700;
+      color: #00e5ff;
+      text-shadow: 0 0 8px #00e5ffaa;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Launch button */
+    .launch-button {
+      background: linear-gradient(45deg, #0074d9, #00bfff);
+      border: none;
+      border-radius: 18px;
+      padding: 12px 30px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 5px 15px #00bfffcc;
+      transition: background 0.3s ease, transform 0.2s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .launch-button:hover {
+      background: linear-gradient(45deg, #005fa3, #0099cc);
+      transform: translateY(-3px);
+    }
+
+    .launch-button:active {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 7px #0074d9cc;
+    }
+
+    /* Footer */
+    #footer {
+      position: fixed;
+      bottom: 12px;
+      width: 100%;
+      text-align: center;
+      font-size: 13px;
+      color: #cccccccc;
+      font-family: monospace, monospace;
+      user-select: none;
+      pointer-events: none;
+      text-shadow: 0 0 3px #000000aa;
+    }
+  </style>
 </head>
 <body>
-  <script src="script.js"></script>
+  <script>
+    const games = [
+      { name: "Minecraft AboutBlank", path: "contents/minecraft-aboutblank.html" }
+    ];
+
+    function createGUI() {
+      // Logo
+      const logo = document.createElement("img");
+      logo.id = "logo";
+      logo.src = "https://i.imgur.com/GSJbXh5.png";
+      document.body.appendChild(logo);
+
+      // Chrome-only warning
+      if (/iPad|iPhone|Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)) {
+        const warn = document.createElement("div");
+        warn.id = "warning";
+        warn.innerText = "⚠️ Chrome only — Safari is not supported properly.";
+        document.body.appendChild(warn);
+      }
+
+      // Game list container
+      const gameList = document.createElement("div");
+      gameList.id = "game-list";
+
+      games.forEach((game) => {
+        const card = document.createElement("div");
+        card.className = "game-card";
+
+        const title = document.createElement("div");
+        title.className = "game-title";
+        title.innerText = game.name;
+
+        const button = document.createElement("button");
+        button.className = "launch-button";
+        button.innerText = "Play Fullscreen";
+        button.onclick = () => {
+          const win = window.open("about:blank", "_blank");
+          if (!win) {
+            alert("Popup blocked! Please allow popups for this site.");
+            return;
+          }
+          win.document.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+              <title>${game.name}</title>
+              <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+              <style>
+                html, body {
+                  margin: 0; padding: 0; height: 100%; overflow: hidden;
+                }
+                iframe {
+                  position: fixed;
+                  top: 0; left: 0; right: 0; bottom: 0;
+                  width: 100%;
+                  height: 100%;
+                  border: none;
+                }
+              </style>
+            </head>
+            <body>
+              <iframe src="${game.path}" allowfullscreen></iframe>
+            </body>
+            </html>
+          `);
+          win.document.close();
+        };
+
+        card.appendChild(title);
+        card.appendChild(button);
+        gameList.appendChild(card);
+      });
+
+      document.body.appendChild(gameList);
+
+      // Footer text
+      const footer = document.createElement("footer");
+      footer.id = "footer";
+      footer.innerText = "©Oskar Projects, IF STOLEN PLEASE CONTACT oskaremailshort@gmail.com.";
+      document.body.appendChild(footer);
+    }
+
+    createGUI();
+  </script>
 </body>
 </html>
