@@ -1,64 +1,106 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #001f3f;
-  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #001f3f, #004b8d);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white;
   text-align: center;
+  user-select: none;
 }
 
 #logo {
-  width: 200px;
-  margin: 30px auto 10px;
-  display: block;
+  width: 220px;
+  margin: 40px auto 20px;
+  filter: drop-shadow(0 0 8px #00bfff);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+#logo:hover {
+  transform: scale(1.05) rotate(5deg);
 }
 
 #warning {
   color: #ffcc00;
   font-size: 14px;
   margin-bottom: 20px;
+  font-weight: 600;
+  text-shadow: 0 0 5px #ffcc00;
 }
 
 #game-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 25px;
   padding: 30px;
 }
 
 .game-card {
-  background-color: #003366;
-  padding: 20px;
-  border-radius: 20px;
-  width: 200px;
-  transition: transform 0.2s;
+  background: rgba(0, 75, 141, 0.8);
+  padding: 25px;
+  border-radius: 25px;
+  width: 220px;
+  box-shadow: 0 0 15px #00bfffaa;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, #00bfff55, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .game-card:hover {
-  background-color: #004b8d;
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 0 30px #00d4ff;
+}
+
+.game-card:hover::before {
+  opacity: 1;
 }
 
 .game-title {
-  font-size: 18px;
-  margin-bottom: 10px;
-  font-weight: bold;
-  color: #00bfff;
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: 700;
+  color: #00e5ff;
+  text-shadow: 0 0 8px #00e5ffaa;
+  z-index: 1;
+  position: relative;
 }
 
 .launch-button {
-  background-color: #0074D9;
+  background: linear-gradient(45deg, #0074d9, #00bfff);
   border: none;
-  border-radius: 12px;
-  padding: 10px 20px;
+  border-radius: 18px;
+  padding: 12px 30px;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
+  box-shadow: 0 5px 15px #00bfffcc;
+  transition: background 0.3s ease, transform 0.2s ease;
+  z-index: 1;
+  position: relative;
 }
 
 .launch-button:hover {
-  background-color: #005fa3;
+  background: linear-gradient(45deg, #005fa3, #0099cc);
+  transform: translateY(-3px);
+}
+
+.launch-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 7px #0074d9cc;
 }
