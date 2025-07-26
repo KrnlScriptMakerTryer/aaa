@@ -2,37 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Eaglercraft 1.8.8 in About:Blank</title>
+  <title>Eaglercraft Minecraft 1.8.8</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <style>
-    html, body, iframe {
-      margin: 0; padding: 0; height: 100%; width: 100%; border: none;
-      overflow: hidden;
+    html, body {
+      margin: 0; padding: 0; height: 100%; overflow: hidden; background: black;
     }
-    iframe {
+    #game_container, canvas {
+      width: 100vw !important;
+      height: 100vh !important;
       display: block;
     }
   </style>
 </head>
 <body>
+  <div id="game_container"></div>
+
+  <script src="https://eaglercraft.com/mc/1.8.8/eaglercraft-client.min.js"></script>
   <script>
-    // Open a new about:blank page and inject iframe
-    const url = "https://eaglercraft.com/mc/1.8.8/?userscript=flameddogo99-eaglermobile.js";
-    const win = window.open("about:blank", "_blank");
-    win.document.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>Eaglercraft 1.8.8</title>
-        <style>
-          html, body, iframe { margin: 0; padding: 0; height: 100%; width: 100%; border: none; overflow: hidden; }
-          iframe { display: block; }
-        </style>
-      </head>
-      <body>
-        <iframe src="${url}" frameborder="0" allowfullscreen></iframe>
-      </body>
-      </html>
-    `);
+    // Initialize the game in #game_container with fullscreen scaling
+    Eagler.init({
+      container: document.getElementById("game_container"),
+      width: window.innerWidth,
+      height: window.innerHeight,
+      userscript: "flameddogo99-eaglermobile.js"
+    });
+
+    // Resize game on window resize to keep fullscreen
+    window.addEventListener("resize", () => {
+      Eagler.resize(window.innerWidth, window.innerHeight);
+    });
   </script>
 </body>
 </html>
