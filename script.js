@@ -43,10 +43,25 @@ function createGUI() {
       }
       win.document.write(`
         <!DOCTYPE html>
-        <html>
-        <head><title>${game.name}</title></head>
-        <body style="margin:0;overflow:hidden;">
-          <iframe src="${game.path}" style="width:100vw; height:100vh; border:none;"></iframe>
+        <html lang="en">
+        <head>
+          <title>${game.name}</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+          <style>
+            html, body {
+              margin: 0; padding: 0; height: 100%; overflow: hidden;
+            }
+            iframe {
+              position: fixed;
+              top: 0; left: 0; right: 0; bottom: 0;
+              width: 100%;
+              height: 100%;
+              border: none;
+            }
+          </style>
+        </head>
+        <body>
+          <iframe src="${game.path}" allowfullscreen></iframe>
         </body>
         </html>
       `);
