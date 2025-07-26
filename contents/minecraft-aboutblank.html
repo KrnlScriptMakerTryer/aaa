@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Eaglercraft 1.8.8 in About:Blank</title>
+  <style>
+    html, body, iframe {
+      margin: 0; padding: 0; height: 100%; width: 100%; border: none;
+      overflow: hidden;
+    }
+    iframe {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Open a new about:blank page and inject iframe
+    const url = "https://eaglercraft.com/mc/1.8.8/?userscript=flameddogo99-eaglermobile.js";
+    const win = window.open("about:blank", "_blank");
+    win.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Eaglercraft 1.8.8</title>
+        <style>
+          html, body, iframe { margin: 0; padding: 0; height: 100%; width: 100%; border: none; overflow: hidden; }
+          iframe { display: block; }
+        </style>
+      </head>
+      <body>
+        <iframe src="${url}" frameborder="0" allowfullscreen></iframe>
+      </body>
+      </html>
+    `);
+  </script>
+</body>
+</html>
